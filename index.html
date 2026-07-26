@@ -362,7 +362,7 @@
     </script>
     <!-- Script Unificado: CMS + Carrusel -->
 <script>
-  fetch('brigadas.json')
+  fetch('brigadas.json?v=' + new Date().getTime())
     .then(respuesta => respuesta.json())
     .then(datos => {
         const carousel = document.getElementById('carrusel-dinamico');
