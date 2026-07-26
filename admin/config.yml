@@ -6,11 +6,17 @@ media_folder: "img"
 public_folder: "/img"
 
 collections:
-  - name: "actividades"
-    label: "Actividades y Brigadas"
-    folder: "_actividades"
-    create: true
-    fields:
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Descripción", name: "description", widget: "text"}
-      - {label: "Fotografía", name: "image", widget: "image"}
+  - name: "base_datos"
+    label: "Gestión de Contenido"
+    files:
+      - label: "Todas las Brigadas"
+        name: "brigadas"
+        file: "brigadas.json"
+        fields:
+          - label: "Agrega tus actividades aquí"
+            name: "lista_actividades"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Fotografía", name: "image", widget: "image"}
