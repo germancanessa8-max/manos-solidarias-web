@@ -100,46 +100,22 @@
         </div>
     </section>
 
-    <section class="gallery-section" id="actividades" style="background: var(--light-bg);">
-        <h2 class="section-title">Actividades en Acción</h2>
-        <p class="section-subtitle">Un vistazo a nuestras últimas brigadas, entregas y eventos en la comunidad.</p>
+   <section class="gallery-section" id="actividades" style="background: var(--light-bg);">
+    <h2 class="section-title">Actividades en Acción</h2>
+    <p class="section-subtitle">Un vistazo a nuestras últimas brigadas, entregas y eventos en la comunidad.</p>
+    
+    <!-- Carrusel Interactivo de Actividades -->
+    <div class="carousel-wrapper reveal">
+        <!-- Botón Izquierdo -->
+        <button class="carousel-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
         
-        <!-- Carrusel Interactivo de Actividades -->
-        <div class="carousel-wrapper reveal">
-            <!-- Botón Izquierdo -->
-            <button class="carousel-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
-            
-            <div class="gallery-carousel" id="carrusel-dinamico"
-                <!-- Motor de lectura del CMS -->
-<script>
-  fetch('brigadas.json')
-    .then(respuesta => respuesta.json())
-    .then(datos => {
-        const contenedor = document.getElementById('carrusel-dinamico');
-        let diapositivas = '';
+        <!-- ESTE ES TU CONTENEDOR, TOTALMENTE VACÍO Y BIEN CERRADO -->
+        <div class="gallery-carousel" id="carrusel-dinamico"></div>
         
-        // Lee lo que el director sube y arma tus tarjetas exactas
-        datos.lista_actividades.forEach(actividad => {
-            diapositivas += `
-                <div class="gallery-item">
-                    <img src="${actividad.image}" alt="${actividad.title}">
-                    <div class="gallery-overlay">
-                        <h4>${actividad.title}</h4>
-                        <p>${actividad.description}</p>
-                    </div>
-                </div>
-            `;
-        });
-        
-        contenedor.innerHTML = diapositivas;
-    })
-    .catch(error => console.log('Esperando datos del CMS...'));
-</script>
-            
-            <!-- Botón Derecho -->
-            <button class="carousel-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-    </section>
+        <!-- Botón Derecho -->
+        <button class="carousel-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+</section>
 
     <section class="testimonials-section" id="testimonios">
         <h2 class="section-title">El Impacto en Nuestra Gente</h2>
@@ -384,23 +360,38 @@
         const hiddenElements = document.querySelectorAll('.reveal');
         hiddenElements.forEach((el) => observer.observe(el));
     </script>
-    <!-- Script para Carrusel con Sensor de Bordes -->
-    <script>
-        const carousel = document.querySelector('.gallery-carousel');
+    <!-- Script Unificado: CMS + Carrusel -->
+<script>
+  fetch('brigadas.json')
+    .then(respuesta => respuesta.json())
+    .then(datos => {
+        const carousel = document.getElementById('carrusel-dinamico');
+        let diapositivas = '';
+        
+        datos.lista_actividades.forEach(actividad => {
+            diapositivas += `
+                <div class="gallery-item">
+                    <img src="${actividad.image}" alt="${actividad.title}">
+                    <div class="gallery-overlay">
+                        <h4>${actividad.title}</h4>
+                        <p>${actividad.description}</p>
+                    </div>
+                </div>
+            `;
+        });
+        
+        carousel.innerHTML = diapositivas;
+
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
 
-        // Función que evalúa si debe mostrar u ocultar las flechas
         const updateArrows = () => {
-            // Si estamos totalmente a la izquierda (inicio)
             if (carousel.scrollLeft <= 0) {
                 prevBtn.style.display = 'none';
             } else {
                 prevBtn.style.display = 'flex';
             }
             
-            // Si llegamos totalmente a la derecha (final)
-            // Se resta 2px por márgenes de error de los navegadores al calcular pixeles
             if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2) {
                 nextBtn.style.display = 'none';
             } else {
@@ -408,23 +399,20 @@
             }
         };
 
-        // Movimiento a la derecha
         nextBtn.addEventListener('click', () => {
-            const cardWidth = carousel.querySelector('.gallery-item').offsetWidth + 30; // 30 es el gap
+            const cardWidth = carousel.querySelector('.gallery-item').offsetWidth + 30;
             carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
         });
 
-        // Movimiento a la izquierda
         prevBtn.addEventListener('click', () => {
             const cardWidth = carousel.querySelector('.gallery-item').offsetWidth + 30;
             carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         });
 
-        // Escucha cada vez que se mueve el carrusel para actualizar las flechas
         carousel.addEventListener('scroll', updateArrows);
-        
-        // Ejecuta la revisión apenas carga la página
         updateArrows();
-    </script>
+    })
+    .catch(error => console.log('Esperando datos del CMS...'));
+</script>
 </body>
 </html>
