@@ -368,22 +368,23 @@
         const carousel = document.getElementById('carrusel-dinamico');
         let diapositivas = '';
         
-       // Lee lo que el director sube y arma tus tarjetas
+       // Lee lo que el director sube y arma tus tarjetas exactas
         datos.lista_actividades.forEach(actividad => {
             let recursoVisual = '';
-            let estiloOverlay = ''; // Creamos una variable para ajustar el diseño inteligentemente
+            let estiloOverlay = ''; 
             
             if (actividad.video) {
-                // Si es un video, armamos el reproductor y empujamos el texto hacia arriba (60px)
-                recursoVisual = `<video src="${actividad.video}" controls style="width: 100%; height: 100%; object-fit: cover;"></video>`;
-                estiloOverlay = `style="padding-bottom: 60px;"`; 
+                // Si subió video, armamos el reproductor
+                recursoVisual = `<video src="${actividad.video}" controls style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;"></video>`;
+                // MOVIMIENTO FORZADO y MODO FANTASMA para permitir clics
+                estiloOverlay = `style="transform: translateY(-65px) !important; pointer-events: none;"`; 
             } else if (actividad.image) {
-                // Si es una foto, armamos la imagen y no tocamos el diseño original
-                recursoVisual = `<img src="${actividad.image}" alt="${actividad.title}">`;
+                // Si subió foto, queda exactamente como tu diseño original
+                recursoVisual = `<img src="${actividad.image}" alt="${actividad.title}" style="width: 100%; border-radius: 15px;">`;
                 estiloOverlay = ``; 
             }
 
-            // Armamos la tarjeta inyectando los recursos correctos
+            // Armamos la tarjeta
             diapositivas += `
                 <div class="gallery-item">
                     ${recursoVisual}
