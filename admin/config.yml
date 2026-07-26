@@ -17,11 +17,20 @@ collections:
             name: "lista_actividades"
             widget: "list"
             fields:
-          - label: "Agrega tus actividades aquí"
-            name: "lista_actividades"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Descripción", name: "description", widget: "text"}
-              - {label: "Fotografía", name: "image", widget: "image", required: false}
-              - {label: "Video (Opcional - Formato MP4)", name: "video", widget: "file", required: false}
+              - label: "Título"
+                name: "title"
+                widget: "string"
+                
+              - label: "Descripción"
+                name: "description"
+                widget: "text"
+                
+              - label: "Fotografía"
+                name: "image"
+                widget: "image"
+                required: false
+                
+              - label: "Video (Opcional - Formato MP4)"
+                name: "video"
+                widget: "file"
+                required: false
