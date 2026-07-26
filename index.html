@@ -109,59 +109,32 @@
             <!-- Botón Izquierdo -->
             <button class="carousel-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
             
-            <div class="gallery-carousel">
-                <!-- Actividad 1 -->
+            <div class="gallery-carousel" id="carrusel-dinamico"
+                <!-- Motor de lectura del CMS -->
+<script>
+  fetch('brigadas.json')
+    .then(respuesta => respuesta.json())
+    .then(datos => {
+        const contenedor = document.getElementById('carrusel-dinamico');
+        let diapositivas = '';
+        
+        // Lee lo que el director sube y arma tus tarjetas exactas
+        datos.lista_actividades.forEach(actividad => {
+            diapositivas += `
                 <div class="gallery-item">
-                    <img src="actividad1.jpg" alt="Entrega de alimentos">
+                    <img src="${actividad.image}" alt="${actividad.title}">
                     <div class="gallery-overlay">
-                        <h4>Entrega de Kits de Alimentos</h4>
-                        <p>Apoyo nutricional a familias de escasos recursos.</p>
+                        <h4>${actividad.title}</h4>
+                        <p>${actividad.description}</p>
                     </div>
                 </div>
-                <!-- Actividad 2 -->
-                <div class="gallery-item">
-                    <img src="actividad2.jpg" alt="Educación">
-                    <div class="gallery-overlay">
-                        <h4>Taller Educativo Infantil</h4>
-                        <p>Fomentando la lectura y la creatividad en los más pequeños.</p>
-                    </div>
-                </div>
-                <!-- Actividad 3 -->
-                <div class="gallery-item">
-                    <img src="actividad3.jpg" alt="Brigada Médica">
-                    <div class="gallery-overlay">
-                        <h4>Brigada de Salud Preventiva</h4>
-                        <p>Atención médica gratuita en sectores vulnerables.</p>
-                    </div>
-                </div>
-                <!-- Actividad 4 -->
-                <div class="gallery-item">
-                    <!-- Recuerda poner tu propia foto aquí -->
-                    <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Apoyo a la mujer">
-                    <div class="gallery-overlay">
-                        <h4>Empoderamiento Femenino</h4>
-                        <p>Talleres de emprendimiento y desarrollo personal.</p>
-                    </div>
-                </div>
-                <!-- Actividad 5 -->
-                <div class="gallery-item">
-                    <!-- Recuerda poner tu propia foto aquí -->
-                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuidado Ambiental">
-                    <div class="gallery-overlay">
-                        <h4>Minga Comunitaria</h4>
-                        <p>Recuperación de espacios públicos y áreas verdes.</p>
-                    </div>
-                </div>
-                <!-- Actividad 6 -->
-                <div class="gallery-item">
-                    <!-- Recuerda poner tu propia foto aquí -->
-                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Integración">
-                    <div class="gallery-overlay">
-                        <h4>Jornadas de Integración</h4>
-                        <p>Fomentando la unión y el trabajo en equipo en la comunidad.</p>
-                    </div>
-                </div>
-            </div>
+            `;
+        });
+        
+        contenedor.innerHTML = diapositivas;
+    })
+    .catch(error => console.log('Esperando datos del CMS...'));
+</script>
             
             <!-- Botón Derecho -->
             <button class="carousel-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
