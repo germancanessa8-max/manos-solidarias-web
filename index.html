@@ -376,10 +376,11 @@
             if (actividad.video) {
                 // Si subió video, armamos el reproductor
                 recursoVisual = `<video src="${actividad.video}" controls style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;"></video>`;
-                // MOVIMIENTO FORZADO y MODO FANTASMA para permitir clics
-                estiloOverlay = `style="transform: translateY(-65px) !important; pointer-events: none;"`; 
+                
+                // Llevamos el texto al TECHO de la tarjeta e invertimos la sombra
+                estiloOverlay = `style="top: 0; bottom: auto; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 25px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); pointer-events: none;"`; 
             } else if (actividad.image) {
-                // Si subió foto, queda exactamente como tu diseño original
+                // Si subió foto, queda abajo como tu diseño original
                 recursoVisual = `<img src="${actividad.image}" alt="${actividad.title}" style="width: 100%; border-radius: 15px;">`;
                 estiloOverlay = ``; 
             }
